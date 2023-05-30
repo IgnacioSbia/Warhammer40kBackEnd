@@ -78,3 +78,30 @@ exports.getUserMail = async(req,res)=>{
         res.status(400).json({error: error.message})
     }
 }
+
+//InsertUserFavouriteRace
+exports.insertUserFavourite = async (req,res)=>{
+    try {
+        knex('Favourite')
+        .insert({
+           id_user: req.body.userid,
+           id_races: req.body.raceid
+        })
+        .then(res.json({mensaje: "success!"}))
+        
+    } catch (error) {
+        
+    }
+
+
+}
+
+//GetUsersFavouriteRace
+exports.getUserFavourite = async(req,res)=>{
+    try{
+        const rslt = await knex.select('*').from("Favourite").innerJoin("Races", 'Favourite.id_races', 'Races.id').where('Favourite.id_user', req.query.iduser);
+        res.status(200).json({rslt})
+    }catch(error){
+        res.status(400).json({error: error.message})
+    }
+}
