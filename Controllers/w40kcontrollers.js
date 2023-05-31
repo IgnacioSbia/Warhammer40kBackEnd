@@ -105,3 +105,17 @@ exports.getUserFavourite = async(req,res)=>{
         res.status(400).json({error: error.message})
     }
 }
+
+//DeleteUsersFavouriteRace
+exports.deleteFavouriteRace = async(req,res)=>{
+    try{
+      await knex('Favourite')
+            .where('id_user', req.body.userid)
+            .del()
+            
+        res.json({mensaje:"success!"})
+
+    }catch(error){
+       res.status(400).json({mensaje:error.message})
+    }
+}
